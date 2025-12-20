@@ -20,7 +20,7 @@ void clearBadInput(){
 }
 
 int readInt(std::string prompt){
-    int x{};
+    double x{};
     while(true)
     {
         cout<<prompt; //dynamic prompt
@@ -43,7 +43,7 @@ int readIntRange(std::string prompt, int minV, int maxV){
     }
 }
 
-void readToken(std::string prompt, char* out, int maxsize){
+void readName(std::string prompt, char* out, int maxsize){
     while(true)
     {
         cout<<prompt;
@@ -245,7 +245,7 @@ void addStudent(
         return ;
     } 
     //copy into fixed arrays
-    readToken("Enter a Student Name: ", name, NAME_LEN);
+    readName("Enter a Student Name: ", name, NAME_LEN);
     std::strncpy(ids[studentCount],  id, ID_LEN-1);
     std::strncpy(names[studentCount], name, NAME_LEN-1);
     
