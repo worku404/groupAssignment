@@ -19,11 +19,11 @@ void clearBadInput(){
     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-int readInt(std::string prompt){
-    int x{};
+double readNum(std::string text){
+    double x{};
     while(true)
     {
-        cout<<prompt; //dynamic prompt
+        cout<<text; //dynamic text
         if (cin >> x ) return x;
         else{
             clearBadInput();
@@ -32,9 +32,9 @@ int readInt(std::string prompt){
     }
 }
 
-int readIntRange(std::string prompt, int minV, int maxV){
+double readNumRange(std::string text, int minV, int maxV){
     while (true){
-        int x = readInt(prompt);
+        double x = readNum(text);
         if (minV<= x && x <=maxV){
             return x;
         }else{
@@ -43,10 +43,10 @@ int readIntRange(std::string prompt, int minV, int maxV){
     }
 }
 
-void readToken(std::string prompt, char* out, int maxsize){
+void readName(std::string text, char* out, int maxsize){
     while(true)
     {
-        cout<<prompt;
+        cout<<text;
         cin>>std::ws;
         cin.getline(out, maxsize);
         if (cin.fail())
@@ -56,15 +56,15 @@ void readToken(std::string prompt, char* out, int maxsize){
             continue;
         }
         if (std::strlen(out) >0) return;
-        clearBadInput();
-        cout<<"Invalid Input. Try again. \n";
+        // clearBadInput();
+        // cout<<"Invalid Input. Try again. \n";
     }
 }
 
-void readId(std::string prompt, char* out, int maxsize){
+void readId(std::string text, char* out, int maxsize){
     while(true)
     {
-        cout<<prompt;
+        cout<<text;
         cin>>std::ws;
         cin.getline(out, maxsize);
         if (cin.fail())
@@ -130,7 +130,7 @@ int maxScore(const double* row, int tests)
     return mx;
 }
 
-int minScore(const double* row, int tests)
+double minScore(const double* row, int tests)
 {
     double mn = row[0];
     for (int i=1; i<tests; i++)
@@ -245,13 +245,13 @@ void addStudent(
         return ;
     } 
     //copy into fixed arrays
-    readToken("Enter a Student Name: ", name, NAME_LEN);
+    readName("Enter a Student Name: ", name, NAME_LEN);
     std::strncpy(ids[studentCount],  id, ID_LEN-1);
     std::strncpy(names[studentCount], name, NAME_LEN-1);
     
     cout << "Enter the scores for " << testCount << " assessment(s) (0 to 100).\n";
     for (int i=0; i<testCount; i++){
-        marks[studentCount][i] = readIntRange("mark: ", 0, 100); //readIntRange(std::string prompt, int minV, int maxV)
+        marks[studentCount][i] = readNumRange("mark: ", 0, 100); //readIntRange(std::string text, int minV, int maxV)
     }
     ++studentCount;
     cout<<"Student added.\n";
@@ -279,8 +279,8 @@ void updateMarks(
     {
         cout << " " << (i + 1) << ") Current score: " << marks[idx][i] << "\n";
     }
-    int testNo = readIntRange("", 1, testCount);
-    int newValue = readIntRange("New Value: ", 0, 100);
+    int testNo = readNumRange("", 1, testCount);
+    double newValue = readNumRange("New Value: ", 0, 100);
 
     marks[idx][testNo-1] = newValue;
     cout<<"Updated.\n";
@@ -371,7 +371,7 @@ void classSummaryAndRanging(
 int main(){
     cout<<"Student Gradebook Management System (C++)\n";
     cout<<"-----------------------------------------\n";
-    int testCount = readIntRange("Enter the number of assessments per student (1-8): ", 1, MAX_TESTS);
+    int testCount = readNumRange("Enter the number of assessments per student (1-8): ", 1, MAX_TESTS);
 
     char ids[MAX_STUDENT][ID_LEN]{};
     char names[MAX_STUDENT][NAME_LEN]{};
@@ -390,7 +390,7 @@ int main(){
     cout << " 0) Exit the program\n";
 
         
-        int choice = readIntRange("Choice: ", 0, 5);
+        int choice = readNumRange("Choice: ", 0, 5);
         if (choice==0)
         {
             cout<<"\nGood Bay!\n";
